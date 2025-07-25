@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "timeformatter",
+  "version": "${version}",
+  "name": "TimeFormatter",
+  "description": "A client-side mod which formats Discord Timestamps to your local time.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/timeformatter/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.m3z0id.timeformatter.client.TimeformatterClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "timeformatter.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
