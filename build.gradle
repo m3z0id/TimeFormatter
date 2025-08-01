@@ -1,10 +1,16 @@
 plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
-    id 'maven-publish'
 }
 
-version = project.mod_version
-group = project.maven_group
+def MAVEN_GROUP = "com.m3z0id"
+def MINECRAFT_VERSION = project.hasProperty('mc') ? project.property("mc") as String : "1.21.4"
+def YARN = project.hasProperty('mc') ? project.property("yarn") as String : "1.21.4+build.8"
+def MOD_VERSION = project.mod_version
+def API_VERSION = project.hasProperty('api') ? project.property("api") as String : "0.119.3+1.21.4"
+def FABRIC_LOADER = project.loader_version
+
+version = "$MOD_VERSION+mc$MINECRAFT_VERSION"
+group = MAVEN_GROUP
 
 base {
     archivesName = project.archives_base_name
@@ -27,23 +33,23 @@ repositories {
 
 dependencies {
     // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+    mappings "net.fabricmc:yarn:${YARN}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${API_VERSION}"
 }
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
+    inputs.property "minecraft_version", MINECRAFT_VERSION
+    inputs.property "loader_version", FABRIC_LOADER
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+                "minecraft_version": MINECRAFT_VERSION,
+                "loader_version": MINECRAFT_VERSION
     }
 }
 
@@ -67,7 +73,7 @@ java {
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
-    withSourcesJar()
+    // withSourcesJar()
 }
 
 jar {
