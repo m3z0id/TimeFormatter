@@ -1,5 +1,6 @@
 package com.m3z0id.timeformatter.client;
 
+import com.m3z0id.timeformatter.client.configuration.Configuration;
 import com.m3z0id.timeformatter.client.listeners.ChatListener;
 import net.fabricmc.api.ClientModInitializer;
 

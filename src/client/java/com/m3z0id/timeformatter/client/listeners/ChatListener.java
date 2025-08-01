@@ -61,7 +61,7 @@ public class ChatListener {
             String messageLiteral = message.getString();
             if (messageLiteral == null) return ChatMessageActionResult.fail(message);
 
-            Pattern pattern = Pattern.compile("<t:(\\d{1,13}|now)(?::([fFdDtTrR]))?>");
+            Pattern pattern = Pattern.compile("<t:(\\d{1,13}|now|yesterday|tomorrow)(?::([fFdDtTrR]))?>");
             Matcher matcher = pattern.matcher(messageLiteral);
 
             StringBuilder sb = new StringBuilder();
@@ -71,7 +71,12 @@ public class ChatListener {
                 try {
                     timestamp = Long.parseLong(matcher.group(1));
                 } catch (NumberFormatException e) {
-                    timestamp = Instant.now().getEpochSecond();
+                    switch (matcher.group(1)) {
+                        case "now" -> timestamp = Instant.now().getEpochSecond();
+                        case "yesterday" -> timestamp = Instant.now().getEpochSecond() - 86400;
+                        case "tomorrow" -> timestamp = Instant.now().getEpochSecond() + 86400;
+                        default -> timestamp = 0L; // Can't happen
+                    }
                 }
 
                 char mode = 'f';

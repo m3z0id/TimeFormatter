@@ -16,7 +16,7 @@ A simple client-side Minecraft mod that automatically finds and formats Discord-
 
 The mod checks incoming chat messages for timestamps like `<t:TIMESTAMP:STYLE>`.
 
--   `TIMESTAMP`: A Unix timestamp (in seconds). You can also use the special value `now` to represent the current time.
+-   `TIMESTAMP`: A Unix timestamp (in seconds). You can also use the special values `yesterday`, `now` and `tomorrow` to represent the respective time.
 -   `STYLE`: An optional single character that controls the output format. If you don't provide a style, it defaults to `f` (Short Date/Time).
 
 ### Supported Styles
