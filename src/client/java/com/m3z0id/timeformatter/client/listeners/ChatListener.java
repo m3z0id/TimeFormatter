@@ -3,6 +3,9 @@ package com.m3z0id.timeformatter.client.listeners;
 import com.m3z0id.timeformatter.client.TimeformatterClient;
 import com.m3z0id.timeformatter.client.datatypes.ChatMessageActionResult;
 import com.m3z0id.timeformatter.client.events.ChatMessageReceiver;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
 import net.minecraft.text.Text;
 
 import java.time.Duration;
@@ -58,13 +61,13 @@ public class ChatListener {
     public static void register() {
         TimeformatterClient.LOGGER.info("Initializing ChatListener");
         ChatMessageReceiver.EVENT.register((message, signatureData, indicator) -> {
+
+            Component msg = MinecraftClientAudiences.of().asAdventure(message);
             String messageLiteral = message.getString();
             if (messageLiteral == null) return ChatMessageActionResult.fail(message);
 
             Pattern pattern = Pattern.compile("<t:(\\d{1,13}|now|yesterday|tomorrow)(?::([fFdDtTrR]))?>");
             Matcher matcher = pattern.matcher(messageLiteral);
-
-            StringBuilder sb = new StringBuilder();
 
             while (matcher.find()) {
                 long timestamp;
@@ -79,22 +82,19 @@ public class ChatListener {
                     }
                 }
 
+                if(timestamp > 8640000000000L) continue;
+
                 char mode = 'f';
                 if (matcher.groupCount() > 1 && matcher.group(2) != null) mode = matcher.group(2).charAt(0);
 
-                if(timestamp > 8640000000000L) {
-                    matcher.appendReplacement(sb, matcher.group(0));
-                    continue;
-                }
+                TextReplacementConfig config = TextReplacementConfig.builder()
+                        .matchLiteral(matcher.group(0))
+                        .replacement(getTime(timestamp, mode))
+                        .build();
 
-                String replacement = getTime(timestamp, mode);
-                replacement = Matcher.quoteReplacement(replacement);
-                matcher.appendReplacement(sb, replacement);
+                msg = msg.replaceText(config);
             }
-            matcher.appendTail(sb);
-
-            Text newMessage = Text.literal(sb.toString()).setStyle(message.getStyle());
-
+            Text newMessage = MinecraftClientAudiences.of().asNative(msg);
             return ChatMessageActionResult.success(newMessage);
         });
     }

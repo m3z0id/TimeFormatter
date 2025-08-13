@@ -8,6 +8,7 @@ def YARN = project.hasProperty('mc') ? project.property("yarn") as String : "1.2
 def MOD_VERSION = project.mod_version
 def API_VERSION = project.hasProperty('api') ? project.property("api") as String : "0.119.3+1.21.4"
 def FABRIC_LOADER = project.loader_version
+def ADVENTURE_FABRIC_API = project.hasProperty('adventure') ? project.property('adventure') as String : '6.3.0'
 
 version = "$MOD_VERSION+mc$MINECRAFT_VERSION"
 group = MAVEN_GROUP
