@@ -4,7 +4,8 @@
   "package": "com.m3z0id.timeformatter.client.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "MixinChatHud"
+    "MixinChatHud",
+    "MixinClientPlayNetworkHandler"
   ],
   "injectors": {
     "defaultRequire": 1

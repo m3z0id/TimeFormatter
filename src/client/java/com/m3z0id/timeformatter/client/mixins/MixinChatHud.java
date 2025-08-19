@@ -1,6 +1,6 @@
 package com.m3z0id.timeformatter.client.mixins;
 
-import com.m3z0id.timeformatter.client.datatypes.ChatMessageActionResult;
+import com.m3z0id.timeformatter.client.datatypes.ChatMessageReceiveActionResult;
 import com.m3z0id.timeformatter.client.events.ChatMessageReceiver;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
@@ -33,7 +33,7 @@ public abstract class MixinChatHud {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V", at = @At("HEAD"), cancellable = true)
     private void addMessage(Text message, MessageSignatureData signatureData, MessageIndicator indicator, CallbackInfo ci) {
-        ChatMessageActionResult actionResult = ChatMessageReceiver.EVENT.invoker().receive(message, signatureData, indicator);
+        ChatMessageReceiveActionResult actionResult = ChatMessageReceiver.EVENT.invoker().receive(message, signatureData, indicator);
         if (actionResult.getResult() == ActionResult.FAIL) {
             ci.cancel();
             return;

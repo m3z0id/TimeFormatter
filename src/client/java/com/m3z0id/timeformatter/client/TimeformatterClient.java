@@ -2,6 +2,7 @@ package com.m3z0id.timeformatter.client;
 
 import com.m3z0id.timeformatter.client.configuration.Configuration;
 import com.m3z0id.timeformatter.client.listeners.ChatListener;
+import com.m3z0id.timeformatter.client.listeners.ChatSendListener;
 import net.fabricmc.api.ClientModInitializer;
 
 import java.util.logging.Logger;
@@ -12,5 +13,6 @@ public class TimeformatterClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ChatListener.register();
+        ChatSendListener.register();
     }
 }

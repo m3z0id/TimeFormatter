@@ -8,13 +8,14 @@ A simple client-side Minecraft mod that automatically finds and formats Discord-
 
 -   **Client-Side Only**: No server-side installation is required. It works on any server you join. The formatting works only with the mod installed.
 -   **Automatic Formatting**: Detects timestamps like `<t:1672531200>` in chat messages.
+-   **Literal Sending** (not timezone aware): If a timestamp like `<<t:1672531200>>` is sent in the chat, it will get replaced by a matching literal assuming it won't overflow the 256 character limit, thus visible to everyone.
 -   **Local Time Conversion**: All timestamps are converted and displayed in your computer's local time zone.
 -   **Multiple Formats**: Supports all of Discord's standard timestamp formatting styles.
 -   **Relative Time**: Can display time relatively, such as "5 minutes ago" or "in 2 hours".
 
 ## How It Works
 
-The mod checks incoming chat messages for timestamps like `<t:TIMESTAMP:STYLE>`.
+The mod checks incoming chat messages for timestamps like `<t:TIMESTAMP:STYLE>` (or `<<t:TIMESTAMP:STYLE>>`).
 
 -   `TIMESTAMP`: A Unix timestamp (in seconds). You can also use the special values `yesterday`, `now` and `tomorrow` to represent the respective time.
 -   `STYLE`: An optional single character that controls the output format. If you don't provide a style, it defaults to `f` (Short Date/Time).
@@ -33,11 +34,18 @@ The mod checks incoming chat messages for timestamps like `<t:TIMESTAMP:STYLE>`.
 
 ### Example
 
-If another player sends the following message in chat:
+If another player let's say in the UTC timezone sends the following message in chat:
 > `The server event will start at <t:1704067200:F>.`
 
-You will see it formatted to your local time zone:
+And you're in the GMT+1 timezone, you'll see:
 > `The server event will start at Monday, January 1, 2024 at 01:00.`
+
+
+However, if the player in UTC sends this message in chat:
+> `My date and time is <<t:1704067200:F>>.`
+
+Everyone (even players without this mod) will see this:
+> `The server event will start at Monday, January 1, 2024 at 01:00.
 
 ## Installation
 
