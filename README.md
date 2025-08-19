@@ -59,7 +59,7 @@ This is a Fabric mod and requires the [Fabric API](https://modrinth.com/mod/fabr
 
 1.  Clone the repository: `git clone https://github.com/m3z0id/TimeFormatter.git`
 2.  Navigate into the project directory: `cd TimeFormatter`
-3.  Build the project using Gradle: `./gradlew build`
+3.  Build the project using Gradle: `./gradlew build -Pmc=<Minecraft Version> -Pyarn=<Yarn Version> -Papi=<Fabric API Version> -Padventure=<Koryo Adventure Fabric Version>`
 4.  The compiled `.jar` file will be located in the `build/libs/` directory.
 
 ## License
