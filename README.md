@@ -45,7 +45,7 @@ However, if the player in UTC sends this message in chat:
 > `My date and time is <<t:1704067200:F>>.`
 
 Everyone (even players without this mod) will see this:
-> `The server event will start at Monday, January 1, 2024 at 01:00.
+> `The server event will start at Monday, January 1, 2024 at 01:00.`
 
 ## Installation
 
